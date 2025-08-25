@@ -8,3 +8,5 @@ router.get("/api/health", (req, res) => {
     timestamp: new Date().toISOString(),
   });
 });
+
+export { router };
