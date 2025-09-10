@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { prisma } from '../../../lib/prisma';
 import { StatusCodes } from 'http-status-codes';
 
-interface DeleteTaskParams {
+export interface DeleteTaskParams {
   id: string;
 }
 
@@ -32,16 +32,20 @@ export const DeleteById = async (
     });
 
     if (!existingTask) {
-      return res.status(404).json({ error: 'Tarefa não encontrada' });
+      return res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: 'Tarefa não encontrada' });
     }
 
     await prisma.task.delete({
       where: { id },
     });
 
-    res.status(204).send();
+    res.status(StatusCodes.NOT_FOUND).send();
   } catch (error) {
     console.error('Erro ao deletar tarefa:', error);
-    res.status(500).json({ error: 'Erro interno do servidor' });
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: 'Erro interno do servidor' });
   }
 };

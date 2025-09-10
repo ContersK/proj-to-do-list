@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import { StatusCodes } from 'http-status-codes';
 import { Request, Response } from 'express';
 
-interface CreateTaskBody {
+export interface CreateTaskBody {
   title: string;
   description?: string;
   priority?: 'low' | 'medium' | 'high';
@@ -45,6 +45,7 @@ export const Create = async (
       });
     }
 
+    // Criar a nova tarefa no banco de dados
     const newTask = await prisma.task.create({
       data: {
         title: title.trim(),
@@ -53,9 +54,12 @@ export const Create = async (
       },
     });
 
-    res.status(201).json(newTask);
+    // Retornar um json com o status 201 (Created) e a nova tarefa
+    res.status(StatusCodes.CREATED).json(newTask);
   } catch (error) {
     console.error('Erro ao criar tarefa:', error);
-    res.status(500).json({ error: 'Erro interno do servidor' });
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: 'Erro interno do servidor' });
   }
 };

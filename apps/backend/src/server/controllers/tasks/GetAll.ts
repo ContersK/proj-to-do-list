@@ -3,7 +3,7 @@ import { prisma } from '../../../lib/prisma';
 import { validation } from '../../shared/middleware/validation';
 import * as yup from 'yup';
 
-interface IQueryProps {
+export interface IQueryProps {
   id?: number;
   page?: number;
   limit?: number;

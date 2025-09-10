@@ -1,8 +1,8 @@
-import { Create, CreateValidation } from './Create';
-import { GetAll, GetAllValidation } from './GetAll';
-import { GetById, GetByIdValidation } from './GetById';
-import { UpdateById, UpdateByIdValidation } from './UpdateById';
-import { DeleteById, DeleteByIdValidation } from './DeleteById';
+import * as Create from './Create';
+import * as GetAll from './GetAll';
+import * as GetById from './GetById';
+import * as UpdateById from './UpdateById';
+import * as DeleteById from './DeleteById';
 
 export const TasksController = {
   ...Create,
@@ -10,9 +10,4 @@ export const TasksController = {
   ...GetById,
   ...UpdateById,
   ...DeleteById,
-  ...CreateValidation,
-  ...GetAllValidation,
-  ...GetByIdValidation,
-  ...UpdateByIdValidation,
-  ...DeleteByIdValidation,
 };

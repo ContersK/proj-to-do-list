@@ -1,15 +1,5 @@
 import { Router } from 'express';
-import { GetById, GetByIdValidation } from '../controllers/tasks/GetById';
-import { GetAll, GetAllValidation } from '../controllers/tasks/GetAll';
-import { Create, CreateValidation } from '../controllers/tasks/Create';
-import {
-  UpdateById,
-  UpdateByIdValidation,
-} from '../controllers/tasks/UpdateById';
-import {
-  DeleteById,
-  DeleteByIdValidation,
-} from '../controllers/tasks/DeleteById';
+import { TasksController } from '../controllers/tasks';
 
 const router = Router();
 
@@ -20,22 +10,24 @@ router.get('/api/health', (req, res) => {
   });
 });
 
-router.get('/tasks', (req, res) => {
-  GetAllValidation(req, res, () => GetAll(req, res));
-});
+router.get('/tasks', TasksController.GetAllValidation, TasksController.GetAll);
 
-router.get('/tasks/:id', (req, res) => {
-  GetByIdValidation(req, res, () => GetById(req, res));
-});
-router.post('/tasks', (req, res) => {
-  CreateValidation(req, res, () => Create(req, res));
-});
+router.get(
+  '/tasks/:id',
+  TasksController.GetByIdValidation,
+  TasksController.GetById,
+);
+router.post('/tasks', TasksController.CreateValidation, TasksController.Create);
 
-router.put('/tasks/:id', (req, res) => {
-  UpdateByIdValidation(req, res, () => UpdateById(req, res));
-});
-router.delete('/tasks/:id', (req, res) => {
-  DeleteByIdValidation(req, res, () => DeleteById(req, res));
-});
+router.put(
+  '/tasks/:id',
+  TasksController.UpdateByIdValidation,
+  TasksController.UpdateById,
+);
+router.delete(
+  '/tasks/:id',
+  TasksController.DeleteByIdValidation,
+  TasksController.DeleteById,
+);
 
 export { router };

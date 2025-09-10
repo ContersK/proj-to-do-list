@@ -6,7 +6,7 @@ import { Request, Response } from 'express';
 
 import { StatusCodes } from 'http-status-codes';
 
-interface GetTaskParams {
+export interface GetTaskParams {
   id: string;
 }
 

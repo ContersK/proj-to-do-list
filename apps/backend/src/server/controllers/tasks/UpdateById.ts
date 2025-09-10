@@ -1,11 +1,10 @@
-import { server } from '../../Server';
 import { prisma } from '../../../lib/prisma';
 import { validation } from '../../shared/middleware/validation';
 import * as yup from 'yup';
 import { StatusCodes } from 'http-status-codes';
 import { Request, Response } from 'express';
 
-interface UpdateTaskBody {
+export interface UpdateTaskBody {
   title?: string;
   description?: string;
   completed?: boolean;
