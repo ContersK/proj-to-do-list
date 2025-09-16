@@ -11,10 +11,7 @@ export interface DeleteTaskParams {
 export const DeleteByIdValidation = validation((getSchema) => ({
   params: getSchema<DeleteTaskParams>(
     yup.object({
-      id: yup
-        .string()
-        .required('ID da tarefa é obrigatório')
-        .uuid('ID inválido'),
+      id: yup.string().required('ID da tarefa é obrigatório'),
     }) as yup.ObjectSchema<DeleteTaskParams>,
   ),
 }));
@@ -33,7 +30,7 @@ export const DeleteById = async (
 
     if (!existingTask) {
       return res
-        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .status(StatusCodes.NOT_FOUND)
         .json({ error: 'Tarefa não encontrada' });
     }
 
@@ -41,7 +38,7 @@ export const DeleteById = async (
       where: { id },
     });
 
-    res.status(StatusCodes.NOT_FOUND).send();
+    res.status(StatusCodes.OK).send();
   } catch (error) {
     console.error('Erro ao deletar tarefa:', error);
     res

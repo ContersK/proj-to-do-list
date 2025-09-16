@@ -30,12 +30,16 @@ export const GetById = async (req: Request, res: Response) => {
     });
 
     if (!task) {
-      return res.status(404).json({ error: 'Tarefa não encontrada' });
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: 'Tarefa não encontrada' });
     }
 
     res.json(task);
   } catch (error) {
     console.error('Erro ao buscar tarefa:', error);
-    res.status(500).json({ error: 'Erro interno do servidor' });
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: 'Erro interno do servidor' });
   }
 };
