@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Plus, X } from "lucide-react";
-import type { CreateTaskData } from "../Types/Task";
+import React, { useState } from 'react';
+import { Plus, X } from 'lucide-react';
+import type { CreateTaskData } from '../../Types/Task';
 
 interface TaskFormProps {
   onSubmit: (data: CreateTaskData) => void;
@@ -12,8 +12,8 @@ export const TaskForm: React.FC<TaskFormProps> = ({
   isLoading = false,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,14 +26,14 @@ export const TaskForm: React.FC<TaskFormProps> = ({
     });
 
     // Reset form
-    setTitle("");
-    setDescription("");
+    setTitle('');
+    setDescription('');
     setIsOpen(false);
   };
 
   const handleCancel = () => {
-    setTitle("");
-    setDescription("");
+    setTitle('');
+    setDescription('');
     setIsOpen(false);
   };
 
@@ -102,7 +102,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
             ) : (
               <Plus size={16} />
             )}
-            {isLoading ? "Criando..." : "Criar Task"}
+            {isLoading ? 'Criando...' : 'Criar Task'}
           </button>
         </div>
       </form>

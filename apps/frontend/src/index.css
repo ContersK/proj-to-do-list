@@ -1,0 +1,23 @@
+:root {
+  font-family: "Inter", "Segue UI", "Arial" sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --primary: #f5f6fa; /* fundo principal: quase branco */
+  --secondary: #dbeafe; /* azul claro pastel */
+  --terceary: #a7c7e7; /* azul acinzentado suave */
+  --accent: #b8e0d2; /* verde água claro */
+  --red: #ffb4b4; /* vermelho pastel para alertas */
+  --soft-white: #ffffff; /* branco puro */
+  --white: #f8fafc; /* branco levemente acinzentado */
+  --black: #22223b; /* cinza escuro para textos */
+  --gray: #e2e8f0; /* cinza claro para bordas/fundos */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

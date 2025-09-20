@@ -1,7 +1,7 @@
 // src/components/TaskItem.tsx
 import React, { useState } from "react";
 import { Check, Edit2, Trash2, Save, XCircle } from "lucide-react";
-import type { Task, UpdateTaskData } from "../Types/Task";
+import type { Task, UpdateTaskData } from "../../Types/Task";
 
 interface TaskItemProps {
   task: Task;

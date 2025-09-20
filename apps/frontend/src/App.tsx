@@ -1,7 +1,7 @@
 // src/App.tsx
 import { useState, useEffect } from "react";
-import { TaskItem } from "./components/TaskItems";
-import { TaskForm } from "./components/TaskForm";
+import { TaskItem } from "./components/Tasks/TaskItems";
+import { TaskForm } from "./components/Tasks/TaskForm";
 import { taskAPI } from "./services/api";
 import type { Task, CreateTaskData, UpdateTaskData } from "./Types/Task";
 import { AlertTriangle, CheckCircle, Clock, ListTodo } from "lucide-react";
@@ -21,16 +21,26 @@ function App() {
     try {
       setLoading(true);
       setError(null);
-      const tasksData = await taskAPI.getTasks();
+      const response = await taskAPI.getTasks();
 
-      // DEBUG - vamos ver o que a API está retornando
-      console.log("Dados recebidos da API:", tasksData);
-      console.log("Tipo dos dados:", typeof tasksData);
-      console.log("É array?", Array.isArray(tasksData));
+      // DEBUG - vamos ver o que realmente chega
+      console.log("🔍 Response completa:", response);
 
-      // Garantir que sempre seja um array
-      const tasksArray = Array.isArray(tasksData) ? tasksData : [];
-      setTasks(tasksArray);
+      // Extrair o array de tasks corretamente
+      const tasksData = Array.isArray(response)
+        ? response
+        : response &&
+          typeof response === "object" &&
+          "data" in response &&
+          Array.isArray((response as { data: Task[] }).data)
+        ? (response as { data: Task[] }).data
+        : [];
+
+      console.log("🔍 Tasks extraídas:", tasksData);
+      console.log("🔍 Quantidade de tasks:", tasksData.length);
+      console.log("🔍 Primeira task:", tasksData?.[0]);
+
+      setTasks(tasksData);
     } catch (err) {
       setError("Erro ao carregar tasks. Verifique se o backend está rodando.");
       console.error("Erro ao carregar tasks:", err);
@@ -86,20 +96,30 @@ function App() {
   };
 
   // Filtrar tasks
-  const filteredTasks = tasks.filter((task) => {
-    switch (filter) {
-      case "pending":
-        return !task.completed;
-      case "completed":
-        return task.completed;
-      default:
-        return true;
-    }
-  });
+  const filteredTasks = Array.isArray(tasks)
+    ? tasks.filter((task) => {
+        switch (filter) {
+          case "pending":
+            return !task.completed;
+          case "completed":
+            return task.completed;
+          default:
+            return true;
+        }
+      })
+    : [];
 
-  // Estatísticas
-  const totalTasks = tasks.length;
-  const completedTasks = tasks.filter((task) => task.completed).length;
+  // DEBUG - vamos ver os filtros
+  console.log("🎯 Estado atual:");
+  console.log("- Total tasks no estado:", tasks.length);
+  console.log("- Filtro ativo:", filter);
+  console.log("- Tasks filtradas:", filteredTasks.length);
+
+  // Estatísticas - com proteção contra undefined
+  const totalTasks = Array.isArray(tasks) ? tasks.length : 0;
+  const completedTasks = Array.isArray(tasks)
+    ? tasks.filter((task) => task.completed).length
+    : 0;
   const pendingTasks = totalTasks - completedTasks;
 
   if (loading) {
